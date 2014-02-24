@@ -4,8 +4,10 @@
 from BeautifulSoup import BeautifulSoup
 from flask.ext.script import Manager
 from requests import get
+from sqlalchemy.exc import IntegrityError
 
 from useragent import app, db
+from useragent.models import UserAgent
 
 
 ##### GLOBALS
@@ -42,7 +44,21 @@ def rmdb():
 
 
 @manager.command
-def fetch_uas():
+def upload_user_agents():
+    """Upload all User Agents into our PostgreSQL database."""
+    for user_agent in fetch_user_agents():
+        ua = UserAgent(string=user_agent)
+        db.session.add(ua)
+
+        try:
+            db.session.commit()
+            print 'Added User Agent:', ua.string
+        except IntegrityError:
+            db.session.rollback()
+
+
+##### HELPERS
+def fetch_user_agents():
     """
     Scrape this page: http://www.useragentstring.com/pages/All/ (which returns
     every User Agent string known to man), then strip the list down to only the
@@ -60,8 +76,7 @@ def fetch_uas():
             if agent in user_agent.lower():
                 user_agents.append(user_agent)
 
-    for user_agent in user_agents:
-        print user_agent
+    return list(set(user_agents))
 
 
 if __name__ == '__main__':
