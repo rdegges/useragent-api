@@ -5,7 +5,7 @@ from BeautifulSoup import BeautifulSoup
 from flask.ext.script import Manager
 from requests import get
 
-from useragent import app
+from useragent import app, db
 
 
 ##### GLOBALS
@@ -29,6 +29,18 @@ allowed_agents = [
 
 
 ##### SCRIPTS
+@manager.command
+def initdb():
+    """Initialize the PostgreSQL database."""
+    db.create_all()
+
+
+@manager.command
+def rmdb():
+    """Destroy the PostgreSQL database."""
+    db.drop_all()
+
+
 @manager.command
 def fetch_uas():
     """
