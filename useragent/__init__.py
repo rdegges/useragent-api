@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 
 
 ##### MODELS
-from .db import *
+from .models import *
 
 
 ##### API
