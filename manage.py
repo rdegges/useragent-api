@@ -57,6 +57,12 @@ def upload_user_agents():
             db.session.rollback()
 
 
+@manager.command
+def ping():
+    """Ping this Heroku application to keep it running."""
+    get('http://api.useragent.io')
+
+
 ##### HELPERS
 def fetch_user_agents():
     """
