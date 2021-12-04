@@ -1,9 +1,9 @@
 BeautifulSoup==3.2.1
-Flask==0.10.1
+Flask==0.12.3
 Flask-SQLAlchemy==1.0
 Flask-Script==0.6.7
-gevent==1.0
-gunicorn==18.0
+gevent==1.2a1
+gunicorn==19.10.0
 newrelic==2.14.0.11
 psycopg2==2.5.2
-requests==2.2.1
+requests==2.20
