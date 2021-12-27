@@ -6,4 +6,4 @@ gevent==1.0
 gunicorn==18.0
 newrelic==2.14.0.11
 psycopg2==2.5.2
-requests==2.2.1
+requests==2.20
